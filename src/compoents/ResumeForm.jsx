@@ -1,27 +1,37 @@
 import { Button, FormControl, Grid, IconButton, InputLabel, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState,useEffect } from 'react'
-import RemoveIcon from "@mui/icons-material/Remove"
-import AddIcon from "@mui/icons-material/Add"
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function ResumeForm() {
     const [name , setName] = useState({firstName:"",lastName:""})
     const [addEducation , setAddEducation] = useState(false)
-    const [education , setEducation] = useState([{educationName:"",educationStart:"",educationCompletion:""}])
+    const edu = {educationName:"",educationStart:"",educationCompletion:""}
+    const [education , setEducation] = useState([edu])
     
-    function handleEducation(index,event){
-        const temp = [...education];
-        temp[index][event.target.name] = event.target.value;
-        setEducation(temp);
+    function handleEducation(index,e){
+
+        const updatedEducation = education.map((item , i)=>index==i ? Object.assign(item,{[e.target.name]:e.target.value}):item)
+        setEducation(updatedEducation)
+        // const temp = [...education];
+        // temp[index][event.target.name] = event.target.value;
+        // setEducation(temp);
+        // console.log(education)
     } 
 
     function handleAddMoreEdu(){
-        setEducation([...education,{educationName:"",educationStart:"",educationCompletion:""}])
+        setEducation([...education,edu])
     }
 
     function handleRemoveEdu(index){
-        education.splice(index,1);
-        setEducation([...education]);        
+        if(education.length===1){
+            setEducation([edu])
+            setAddEducation(false)
+            return 
+        }
+        const values = [...education];
+        values.splice(index,1);
+        setEducation(values)
     }
 
     
@@ -29,25 +39,34 @@ function ResumeForm() {
     <Grid container spacing={2} sx={{mt:5}}>
         <Grid item sx={{mx:'auto'}} md={8}>
             <Box>
+                <>
                 <InputLabel>Name</InputLabel>
-                <FormControl fullWidth sx={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
-                    <TextField
-                    sx={{width:"45%"}}
-                    id="filled-helperText"
-                    label="First name"
-                    variant="filled"
-                    onChange={(e)=>setName({...name,firstName:e.target.value})}
-                    value={name.firstName}
-                    />
-                    <TextField
-                    sx={{width:"45%"}}
-                    id="filled-helperText"
-                    label="last name"
-                    variant="filled"
-                    onChange={(e)=>setName({...name,lastName:e.target.value})}
-                    value={name.lastName}
-                    />
-                </FormControl>
+
+                    <Grid container spacing={2}>
+                        <Grid item md={6}>
+                            <FormControl fullWidth >
+                                <TextField
+                                id="filled-helperText"
+                                label="First name"
+                                variant="filled"
+                                onChange={(e)=>setName({...name,firstName:e.target.value})}
+                                value={name.firstName}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid item md={6}>
+                            <FormControl fullWidth >
+                                <TextField
+                                id="filled-helperText"
+                                label="First name"
+                                variant="filled"
+                                onChange={(e)=>setName({...name,firstName:e.target.value})}
+                                value={name.firstName}
+                                />
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                </>
             </Box>
 
             <Box sx={{mt:2 }}>
@@ -60,45 +79,52 @@ function ResumeForm() {
                         education.map((item , i)=>(
                             <>
                                 <InputLabel>Education</InputLabel>
-                                <FormControl fullWidth sx={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
-                                    <TextField
-                                    sx={{width:"30%"}}
-                                    label="Education"
-                                    variant="filled"
-                                    name="educationName"
-                                    onChange={(e)=>handleEducation(i,e)}
-                                    value={item.educationtName}
-                                    />
-                                    <TextField
-                                    sx={{width:"25%"}}
-                                    variant="filled"
-                                    name="educationStart"
-                                    type="date"
-                                    helperText="education start"
-                                    onChange={(e)=>handleEducation(i,e)}
-                                    value={item.educationstart}
-                                    />
-                                    <TextField
-                                    sx={{width:"25%"}}
-                                    variant="filled"
-                                    name="educationCompletion"
-                                    type="date"
-                                    helperText="education completion"
-                                    onChange={(e)=>handleEducation(i,e)}
-                                    value={item.educationCompletion}
-                                    />
-                                    <Box sx={{display:"flex" , flexDirection:"row"}}>
-                                        <IconButton onClick={handleAddMoreEdu} color="success">
-                                            <AddIcon  color="success"/>
-                                        </IconButton>
+                                <Grid container spacing={2} key={i}>
+                                    <Grid item md={4}>
+                                        <FormControl fullWidth >
+                                            <TextField
+                                            label="Education"
+                                            variant="filled"
+                                            name="educationName"
+                                            onChange={(e)=>handleEducation(i,e)}
+                                            value={item.educationtName}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item md={3}>
+                                        <FormControl fullWidth>
+                                            <TextField
+                                            variant="filled"
+                                            name="educationStart"
+                                            type="date"
+                                            helperText="education start"
+                                            onChange={(e)=>handleEducation(i,e)}
+                                            value={item.educationStart}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item md={3}>
+                                        <FormControl fullWidth>
+                                            <TextField
+                                            variant="filled"
+                                            name="educationCompletion"
+                                            type="date"
+                                            helperText="education completion"
+                                            onChange={(e)=>handleEducation(i,e)}
+                                            value={item.educationCompletion}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item md={2} sx={{my:'auto'}}>
                                         <IconButton onClick={()=>handleRemoveEdu(i)} color="error">
-                                            <RemoveIcon color="error"/>
+                                            <DeleteIcon color="error"/>
                                         </IconButton>
-                                    </Box>
-                                </FormControl>
+                                    </Grid>
+                                </Grid>
                             </>
                         ))
                     }
+                    <Button onClick={handleAddMoreEdu} color="success" variant="contained">Add More</Button>
                     </>
                 }
 
