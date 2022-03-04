@@ -41,14 +41,14 @@ function ViewResume({basic,education,skill,workSample,setBasic,setEducation,setS
       <Grid container={true} spacing={5} item xs={12}>
         <Grid item xs={6}>
           <div >
-            <Typography variant="h4" component="span">{`${basic.firstName} ${basic.lastName}`}</Typography>
+            <Typography sx={{  textTransform: "capitalize"}} variant="h4" component="span">{`${basic.firstName} ${basic.lastName}`}</Typography>
           </div>
         </Grid>
         <Grid item xs={6}>
           <span>
             <Typography sx={{textAlign:"right"}} variant="h6" component="div">{`${basic.email}`}</Typography>
             <Typography sx={{textAlign:"right"}} variant="body2" component="div">{`${basic.phone}`}</Typography>
-            <Typography sx={{textAlign:"right"}} variant="body2" component="div">{`${basic.city}, ${basic.state}`}</Typography>
+            <Typography sx={{textAlign:"right",  textTransform: "capitalize"}} variant="body2" component="div">{`${basic.city}, ${basic.state}`}</Typography>
           </span>
         </Grid>
       </Grid>
@@ -65,9 +65,9 @@ function ViewResume({basic,education,skill,workSample,setBasic,setEducation,setS
             education.map((element,i)=>(
 
             <Grid item xs={12}>
-              <Typography variant="body1" component="div">{`${element.educationName}`}</Typography>
-              <Typography variant="body2" component="div">{`${element.educationFrom}`}</Typography>
-              <Typography variant="body2" component="div">{`${element.educationStart} to ${element.educationCompletion}`}</Typography>
+              <Typography sx={{  textTransform: "capitalize"}} variant="body1" component="div">{`${element.educationName}`}</Typography>
+              <Typography sx={{  textTransform: "capitalize"}} variant="body2" component="div">{`${element.educationFrom}`}</Typography>
+              <Typography variant="body2" component="div">{element.educationStart!='' ? (`${element.educationStart} to ${element.educationCompletion}`):''}</Typography>
             </Grid>
 
             ))
@@ -87,7 +87,7 @@ function ViewResume({basic,education,skill,workSample,setBasic,setEducation,setS
             skill.map((element,i)=>(
 
             <Grid item xs={6}>
-              <Typography variant="body1" sx={{borderBottom:"2px solid grey",mb:2}} component="span">{`${element.skillName}`}</Typography>
+              <Typography variant="body1" sx={{borderBottom:"2px solid grey",mb:2,  textTransform: "capitalize"}} component="span">{`${element.skillName}`}</Typography>
               <Typography variant="body2" component="div">{`${element.skillStatus}`}</Typography>
             </Grid>
 
@@ -109,8 +109,8 @@ function ViewResume({basic,education,skill,workSample,setBasic,setEducation,setS
             workSample.map((element,i)=>(
 
             <Grid item xs={8}>
-              <Typography variant="body1" sx={{borderBottom:"2px solid grey",mb:2}} component="span">{`${element.workSampleTitle}`}</Typography>
-              <Typography variant="body2" component="div"> {`${element.workSampleDes}`}</Typography>
+              <Typography variant="body1" sx={{borderBottom:"2px solid grey",mb:2,  textTransform: "capitalize"}} component="span">{`${element.workSampleTitle}`}</Typography>
+              <Typography variant="body2" sx={{  textTransform: "capitalize"}} component="div"> {`${element.workSampleDes}`}</Typography>
             </Grid>
 
             ))
