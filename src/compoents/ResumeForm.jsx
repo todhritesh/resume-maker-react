@@ -101,7 +101,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
     
   return (
     <Grid container spacing={2} sx={{mt:5,pb:10}}>
-        <Grid onSubmit={handleSubmit(handleForm)} component="form" item sx={{mx:'auto'}} md={8}>
+        <Grid  item sx={{mx:'auto'}} md={8}>
             <Box  elevation={elevationValue} sx={{p:2}} component={Paper} >
                 <>
                 <InputLabel>Basic Details</InputLabel>
