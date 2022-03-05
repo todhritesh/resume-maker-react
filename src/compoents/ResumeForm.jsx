@@ -363,7 +363,6 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
 
             <Button component={Link} to="/preview" fullWidth variant="contained" sx={{mt:5}} color="primary" >View Resume</Button>
         </Grid>
-        <button type="submit" >click</button>
     </Grid>
   )
 }
