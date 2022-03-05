@@ -216,6 +216,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                 <Grid item md={2.5}>
                                     <FormControl fullWidth>
                                         <TextField
+                                        label="Start"
                                         variant="filled"
                                         name="educationStart"
                                         type="month"
@@ -228,7 +229,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                 <Grid item md={2.5}>
                                     <FormControl fullWidth>
                                         <TextField
-                                        size="small"
+                                        label="End"
                                         variant="filled"
                                         name="educationCompletion"
                                         type="month"
