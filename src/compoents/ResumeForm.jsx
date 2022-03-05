@@ -3,9 +3,33 @@ import { Box } from '@mui/system'
 import React, { useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Link} from 'react-router-dom'
+import * as yup from  "yup";
+import {useForm} from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+
+
+const schema = yup.object().shape({
+    // educationName:yup.sting().required(),
+    // educationStart:yup.sting().required(),
+    // educationCompletion:yup.sting().required(),
+    firstName:yup.string().required(),
+    lastName:yup.string().required(),
+    email:yup.string().required(),
+    // phone:yup.sting().required(),
+    // state:yup.sting().required(),
+    // city:yup.sting().required(),
+})
 
 
 function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSample,setWorkSample}) {
+    
+
+    const handleForm = (data) => {}
+
+    const {register , handleSubmit , errors} = useForm()
+    
+    
+    
     const elevationValue = 5    
 
     //education
@@ -77,7 +101,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
     
   return (
     <Grid container spacing={2} sx={{mt:5,pb:10}}>
-        <Grid item sx={{mx:'auto'}} md={8}>
+        <Grid onSubmit={handleSubmit(handleForm)} component="form" item sx={{mx:'auto'}} md={8}>
             <Box  elevation={elevationValue} sx={{p:2}} component={Paper} >
                 <>
                 <InputLabel>Basic Details</InputLabel>
@@ -86,8 +110,10 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                         <Grid item md={4}>
                             <FormControl fullWidth >
                                 <TextField
+                                // inputRef={register}
                                 id="filled-helperText"
                                 label="First Name"
+                                name="firstName"
                                 variant="filled"
                                 onChange={(e)=>setBasic({...basic,firstName:e.target.value})}
                                 value={basic.firstName}
@@ -99,6 +125,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                 <TextField
                                 id="filled-helperText"
                                 label="Last Name"
+                                name="lastName"
                                 variant="filled"
                                 onChange={(e)=>setBasic({...basic,lastName:e.target.value})}
                                 value={basic.lastName}
@@ -110,6 +137,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                 <TextField
                                 id="filled-helperText"
                                 label="Email"
+                                name="email"
                                 variant="filled"
                                 onChange={(e)=>setBasic({...basic,email:e.target.value})}
                                 value={basic.email}
@@ -122,6 +150,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                 id="filled-helperText"
                                 label="Phone no."
                                 variant="filled"
+                                name="phone"
                                 onChange={(e)=>setBasic({...basic,phone:e.target.value})}
                                 value={basic.phone}
                                 />
@@ -132,6 +161,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                 <TextField
                                 id="filled-helperText"
                                 label="State"
+                                name="state"
                                 variant="filled"
                                 onChange={(e)=>setBasic({...basic,state:e.target.value})}
                                 value={basic.state}
@@ -143,6 +173,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                 <TextField
                                 id="filled-helperText"
                                 label="City"
+                                name="city"
                                 variant="filled"
                                 onChange={(e)=>setBasic({...basic,city:e.target.value})}
                                 value={basic.city}
@@ -159,7 +190,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                         <>
                             <InputLabel>Education</InputLabel>
                             <Grid container spacing={2} key={i} sx={{mb:2}}>
-                                <Grid item md={5}>
+                                <Grid item md={3}>
                                     <FormControl fullWidth >
                                         <TextField
                                         label="Education"
@@ -170,10 +201,10 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item md={5}>
+                                <Grid item md={3}>
                                     <FormControl fullWidth >
                                         <TextField
-                                        label="Education"
+                                        label="Education From"
                                         variant="filled"
                                         name="educationFrom"
                                         helperText="education From"
@@ -182,32 +213,32 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item md={5}>
+                                <Grid item md={2.5}>
                                     <FormControl fullWidth>
                                         <TextField
                                         variant="filled"
                                         name="educationStart"
-                                        type="date"
+                                        type="month"
                                         helperText="education start"
                                         onChange={(e)=>handleEducation(i,e)}
                                         value={item.educationStart}
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item md={5}>
+                                <Grid item md={2.5}>
                                     <FormControl fullWidth>
                                         <TextField
                                         size="small"
                                         variant="filled"
                                         name="educationCompletion"
-                                        type="date"
+                                        type="month"
                                         helperText="education completion"
                                         onChange={(e)=>handleEducation(i,e)}
                                         value={item.educationCompletion}
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item md={1} sx={{my:'auto'}}>
+                                <Grid item xs={1} sx={{my:'auto'}}>
                                     {
                                         education.length>1&&
                                     <IconButton size="small" onClick={()=>handleRemoveEdu(i)} color="error">
@@ -231,7 +262,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                         <>
                             <InputLabel>Skill {i+1}</InputLabel>
                             <Grid container spacing={2} key={i} sx={{mb:2}}>
-                                <Grid item md={5}>
+                                <Grid item md={5.5}>
                                     <FormControl fullWidth >
                                         <TextField
                                         label="Skill"
@@ -242,7 +273,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item md={5}>
+                                <Grid item md={5.5}>
                                     <FormControl fullWidth>
                                     <InputLabel id="demo-multiple-name-label">Status</InputLabel>
                                     <Select
@@ -263,7 +294,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
 
                                     </FormControl>
                                 </Grid>
-                                <Grid item md={2} sx={{my:'auto'}}>
+                                <Grid item xs={1} sx={{my:'auto'}}>
                                     {
                                         skill.length>1&&
                                     <IconButton size="small" onClick={()=>handleRemoveSkill(i)} color="error">
@@ -312,7 +343,7 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item md={1} sx={{my:'auto'}}>
+                                <Grid item xs={1} sx={{my:'auto'}}>
                                     {
                                         workSample.length>1&&
                                     <IconButton size="small" onClick={()=>handleRemoveWorkSample(i)} color="error">
@@ -328,9 +359,10 @@ function ResumeForm({basic,setBasic,education,setEducation,skill,setSkill,workSa
                 
 
             </Box>
-            
-        <Button component={Link} to="/preview" fullWidth variant="contained" sx={{mt:5}} color="primary" >View Resume</Button>
+
+            <Button component={Link} to="/preview" fullWidth variant="contained" sx={{mt:5}} color="primary" >View Resume</Button>
         </Grid>
+        <button type="submit" >click</button>
     </Grid>
   )
 }

@@ -20,7 +20,7 @@ export default function Layout() {
 
 
   return (
-    <div sx={{height:"100vh"}}>
+    <div sx={{}}>
 
     <Routes>
       <Route path="/" exact element={<Starter/>} />
